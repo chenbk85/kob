@@ -1,0 +1,2 @@
+add_executable(test_plateform test_plateform.cc)
+target_link_libraries(test_plateform gtest gtest_main)
