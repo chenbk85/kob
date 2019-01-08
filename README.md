@@ -1,8 +1,7 @@
 # kob
 
 &emsp;&emsp;本项目为随书源码《c++微服务实践》
-[![Build Status](https://travis-ci.org/yangsenlin/snsdemo.svg?branch=master)](https://travis-ci.org/yangsenlin/snsdemo)
-
+[![Build Status](https://travis-ci.org/gottingen/kob.svg?branch=master)](https://travis-ci.org/gottingen/kob)
 # 前言
 
 ## 背景
