@@ -1,0 +1,3 @@
+add_executable(test_type_traits test_type_traits.cc)
+target_link_libraries(test_type_traits gtest gtest_main)
+add_test(test_run test_type_traits)

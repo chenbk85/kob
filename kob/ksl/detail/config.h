@@ -1,0 +1,32 @@
+#ifndef KOB_KSL_DETAIL_CONFIG_H_
+#define KOB_KSL_DETAIL_CONFIG_H_
+
+#ifdef KSL_USER_CONFIG_HEADER
+	#include KSL_USER_CONFIG_HEADER
+#endif
+
+
+
+#include <kob/profile/prof.h>
+
+typedef long long ksl_intmax_t;
+
+#if KOB_COMPILER_NO_TEMPLATES_ALIASES
+    #define KSL_TEMPLATES_ALIASES_ENABLED 0
+#else
+    #define KSL_TEMPLATES_ALIASES_ENABLED 1
+#endif
+
+#if KOB_COMPILER_NO_VARIADIC_TEMPLATES
+    #define KSL_VARIADIC_TEMPLATES_ENABLED 0
+#else
+    #define KSL_VARIADIC_TEMPLATES_ENABLED 1
+#endif
+
+#if KOB_COMPILER_NO_VARIABLE_TEMPLATES
+    #define KSL_VARIABLE_TEMPLATES_ENABLED 0
+#else
+    #define KSL_VARIABLE_TEMPLATES_ENABLED 1
+#endif
+
+#endif //KOB_KSL_DETAIL_CONFIG_H_
