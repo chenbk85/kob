@@ -1,20 +1,17 @@
-dist: trusty
+
 language: cpp
 
-matrix:
-  include:
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          packages:
-            - cmake
+compiler:
+  - gcc
+
+install:
+  - make intall
 
 before_script:
-- cmake --version
-- mkdir build
-- cd build
-- cmake . ${TRAVIS_BUILD_DIR}
+  - cmake --version
+  - mkdir build
+  - cd build
+  - cmake ../
 
 script:
-- make
+  - make
