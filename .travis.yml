@@ -3,8 +3,7 @@ language: cpp
 compiler:
 - gcc
 
-install:
-- make intall
+install:true
 
 before_script:
 - cmake --version
