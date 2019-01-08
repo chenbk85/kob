@@ -10,7 +10,6 @@ include_directories(${PROJECT_SOURCE_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-
 if(O_BUILD_TEST)
     add_subdirectory(third)
     add_subdirectory(test)
