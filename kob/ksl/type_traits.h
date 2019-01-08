@@ -33,7 +33,7 @@ namespace ksl {
 	};
 
 	template <typename T, T v>
-	const T integral_constant<T, v>::value;
+    KOB_CONSTEXPR T integral_constant<T, v>::value;
 
     //true_type / false_type
     typedef integral_constant<bool, true>  true_type;
