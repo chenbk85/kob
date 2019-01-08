@@ -1,3 +1,3 @@
 add_executable(test_type_traits test_type_traits.cc)
 target_link_libraries(test_type_traits gtest gtest_main)
-add_test(test_run test_type_traits)
+add_test(NAME test_type_traits COMMAND test_type_traits)
