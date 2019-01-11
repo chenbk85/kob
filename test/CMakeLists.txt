@@ -1,2 +1,5 @@
 add_subdirectory(profile)
 add_subdirectory(ksl)
+add_subdirectory(strings)
+add_subdirectory(log)
+add_subdirectory(event)

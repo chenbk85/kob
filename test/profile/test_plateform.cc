@@ -4,6 +4,8 @@
 
 #include <gtest/gtest.h>
 #include <kob/profile/prof.h>
+#include <kob/ksl/type_traits.h>
+#include <kob/ksl/string_view.h>
 
 TEST(platform, os)
 {

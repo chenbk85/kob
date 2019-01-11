@@ -1,0 +1,8 @@
+add_executable(test_compare test_compare.cc)
+target_link_libraries(test_compare gtest gtest_main)
+
+add_executable(test_numeric_string test_numeric_string.cc)
+target_link_libraries(test_numeric_string kob_static pthread gtest gtest_main)
+
+add_executable(test_tokenizer test_tokenizer.cc)
+target_link_libraries(test_tokenizer kob_static pthread gtest gtest_main)

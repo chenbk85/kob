@@ -1,7 +1,9 @@
+//
+// Created by liyinbin on 2018/10/8.
+//
 
 #ifndef KOB_PROFILE_COMPILER_TRAITS_H_
 #define KOB_PROFILE_COMPILER_TRAITS_H_
-#include <kob/profile/compiler.h>
 
 #ifndef KOB_MAY_ALIAS_AVAILABLE
     #if defined(KOB_COMPILER_GNUC) && KOB_COMPILER_VERSION >= 3003
