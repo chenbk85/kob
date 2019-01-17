@@ -161,7 +161,7 @@ bool create_directory(const path_view &p, int &ec, perms pm)
 bool create_directories(const path_view &p, perms pm)
 {
     for(size_t i = 0; i <= p.size(); i++) {
-        std::string d = p.sub_path(i);
+        path_view d = p.sub_path(i);
         if (::mkdir(d.c_str(), static_cast<int>(pm)) != 0) {
             if (errno != EEXIST) {
                 return false;
@@ -174,7 +174,7 @@ bool create_directories(const path_view &p, perms pm)
 bool create_directories(const path_view &p, int &ec, perms pm)
 {
     for(size_t i = 0; i <= p.size(); i++) {
-        std::string d = p.sub_path(i);
+        path_view d = p.sub_path(i);
         if (::mkdir(d.c_str(), static_cast<int>(pm)) != 0) {
             if (errno != EEXIST) {
                 ec = errno;

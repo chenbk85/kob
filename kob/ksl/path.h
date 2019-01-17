@@ -2,6 +2,7 @@
 #define COMMON_PATH_H_
 #include <kob/ksl/path_view.h>
 #include <kob/ksl/string_view.h>
+#include <kob/ksl/path_view.h>
 #include <string>
 #include <vector>
 #include <cstddef>
@@ -21,39 +22,49 @@ public:
 
 	path();
 
-	path(path_type pt);
-		
+	explicit  path(path_type pt);
+	/**
+	 * alternate const char* string
+	 *
+	 * @param pStr
+	 */
+	explicit  path(ksl::string_view pStr);
 
-	path(ksl::string_view pStr);
-
-
-	path(const path& path);
+	/**
+	 * copy ctor
+	 * @param path
+	 */
+	path(const path& rhs) = default;
 
 	path(const path& parent, ksl::string_view fileName);
 
 	path(const path& parent, const path& relative);
 
+	path(path&& rhs) = default;
+
+	path& assign(ksl::string_view pStr);
+
+	path& assign(const path& rhs);
+
+	path& assign(const path& parent, ksl::string_view fileName);
+
+	path& assign(const path& parent, const path& relative);
+
+	path& assign(const path&& rhs);
 
 	~path();
 
-	path& operator = (const path& path);
+	path& operator = (const path& rhs);
+
+	path& operator = (path&& path) = default;
 
 	path& operator = (ksl::string_view pStr);
 
 	void swap(path& path);	
 
-
-	path& assign(ksl::string_view pStr);
-		
-
-	path& assign(const path& path);
-
-
 	std::string to_string() const;
 
 	void to_string(std::string &ret) const;
-
-	bool parse(ksl::string_view sv);
 
 
 	path& parse_directory(ksl::string_view pStr);
@@ -100,6 +111,11 @@ public:
 	const std::string& directory(size_t n) const;
 
 	const std::string& operator [] (size_t n) const;
+
+	std::string operator [] (size_t n);
+
+	void replace_dir(size_t index, ksl::string_view seg);
+	void replace_dir(size_t index, std::string &&seg);
 	
 
 	path& push_directory(ksl::string_view dir);
@@ -148,10 +164,6 @@ public:
 	*/
 	static char separator();
 
-	/*!	
-	* @return ':' on unix like system.
-	*/
-	static char path_separator();
 
 	/*!	
 	* @return the current working directory.
@@ -183,6 +195,8 @@ public:
 
 protected:
 	std::string build() const;
+
+	bool parse(ksl::string_view sv);
 
 
 private:
@@ -248,11 +262,6 @@ inline char path::separator()
 	return '/';
 }
 
-
-inline char path::path_separator()
-{
-	return ':';
-}
 
 
 inline void swap(path& p1, path& p2)

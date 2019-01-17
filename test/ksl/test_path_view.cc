@@ -9,34 +9,73 @@
 #include <string>
 #include <iostream>
 
-TEST(filesystem, path_view)
+TEST(filesystem, path_view_1)
 {
+    ksl::filesystem::path_view p6("/tmp/abc/def/sdf/nofile");
+    EXPECT_EQ(p6.raw(), "/tmp/abc/def/sdf/nofile");
+    ksl::filesystem::path_view tmp;
+    tmp = p6.sub_path(0);
+    EXPECT_EQ(tmp.raw(), "/tmp");
+    tmp = p6.sub_path(1);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc");
+    tmp = p6.sub_path(2);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def");
+    tmp = p6.sub_path(3);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf");
+    tmp = p6.sub_path(4);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf/nofile");
+    tmp = p6.sub_path(5);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf/nofile");
 
-    ksl::filesystem::path_view p1("/tmp/nofile");
-    EXPECT_EQ(p1.build(), "/tmp/nofile");
-    EXPECT_EQ(p1[0], "tmp");
+}
 
-    ksl::filesystem::path_view p2("/tmp//nofile");
-    EXPECT_EQ(p2.build(), "/tmp/nofile");
+TEST(filesystem, path_view_2)
+{
+    ksl::filesystem::path_view p6("/tmp//abc//def/sdf/nofile");
+    EXPECT_EQ(p6.raw(), "/tmp/abc/def/sdf/nofile");
+    ksl::filesystem::path_view tmp;
 
-    ksl::filesystem::path_view p3("///tmp/nofile");
-    EXPECT_EQ(p3.build(), "/tmp/nofile");
+    tmp = p6.sub_path(0);
+    EXPECT_EQ(tmp.raw(), "/tmp");
+    tmp = p6.sub_path(1);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc");
+    tmp = p6.sub_path(2);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def");
 
-    ksl::filesystem::path_view p4("/tmp//nofile/");
-    EXPECT_EQ(p4.build(), "/tmp/nofile");
+    tmp = p6.sub_path(4);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf/nofile");
 
-    ksl::filesystem::path_view p5("/tmp/abc/def/nofile");
-    EXPECT_EQ(p5.sub_path(0), "/tmp");
-    EXPECT_EQ(p5.sub_path(1), "/tmp/abc");
-    EXPECT_EQ(p5.sub_path(2), "/tmp/abc/def");
-    EXPECT_EQ(p5.sub_path(3), "/tmp/abc/def/nofile");
-    EXPECT_EQ(p5.sub_path(4), "/tmp/abc/def/nofile");
+    tmp = p6.sub_path(3);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf");
 
-    ksl::filesystem::path_view p6("/tmp//abc/def/nofile");
-    EXPECT_EQ(p6.sub_path(0), "/tmp");
-    EXPECT_EQ(p6.sub_path(1), "/tmp/abc");
-    EXPECT_EQ(p6.sub_path(2), "/tmp/abc/def");
-    EXPECT_EQ(p6.sub_path(3), "/tmp/abc/def/nofile");
-    EXPECT_EQ(p6.sub_path(4), "/tmp/abc/def/nofile");
+
+    tmp = p6.sub_path(5);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf/nofile");
+
+}
+
+TEST(filesystem, path_view_assign)
+{
+    ksl::filesystem::path_view p6;
+    p6.assign("/tmp//abc//def/sdf/nofile");
+    EXPECT_EQ(p6.raw(), "/tmp/abc/def/sdf/nofile");
+    ksl::filesystem::path_view tmp;
+
+    tmp = p6.sub_path(0);
+    EXPECT_EQ(tmp.raw(), "/tmp");
+    tmp = p6.sub_path(1);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc");
+    tmp = p6.sub_path(2);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def");
+
+    tmp = p6.sub_path(4);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf/nofile");
+
+    tmp = p6.sub_path(3);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf");
+
+
+    tmp = p6.sub_path(5);
+    EXPECT_EQ(tmp.raw(), "/tmp/abc/def/sdf/nofile");
 
 }

@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
-
+#include <utility>
 
 namespace ksl {
 
@@ -28,16 +28,6 @@ path::path(path_type pt)
 path::path(ksl::string_view pStr)
 {
 	assign(pStr);
-}
-
-
-
-path::path(const path &rhs)
-: _name(rhs._name),
-  _dirs(rhs._dirs),
-  _absolute(rhs._absolute)
-{
-
 }
 
 
@@ -98,10 +88,33 @@ path &path::assign(const path &rhs)
 }
 
 
-path &path::assign(ksl::string_view pStr) {
+path &path::assign(ksl::string_view pStr)
+{
 
 	parse(pStr);
 	return *this;
+}
+
+path& path::assign(const path& parentPath, ksl::string_view fileName)
+{
+    *this = parentPath;
+    make_parent();
+    _name.append(fileName.begin(), fileName.end());
+    return *this;
+}
+
+path& path::assign(const path& parentPath, const path& relative)
+{
+    *this = parentPath;
+    resolve(relative);
+    return *this;
+
+}
+
+path& path::assign(const path&& rhs)
+{
+    *this = rhs;
+    return *this;
 }
 
 std::string path::to_string() const
@@ -109,10 +122,22 @@ std::string path::to_string() const
 		return build();
 }
 
+void path::to_string(std::string &result) const
+{
+    if (_absolute) {
+        result.append("/");
+    }
+
+    for (string_vec::const_iterator it = _dirs.begin(); it != _dirs.end(); ++it) {
+        result.append(*it);
+        result.append("/");
+    }
+    result.append(_name);
+}
 
 
-
-path &path::parse_directory(ksl::string_view pStr) {
+path &path::parse_directory(ksl::string_view pStr)
+{
 	assign(pStr);
 	return make_directory();
 }
@@ -249,15 +274,28 @@ const std::string &path::directory(size_t n) const
 
 const std::string &path::operator[](size_t n) const
 {
-	assert(n <= _dirs.size());
-
-	if (n < _dirs.size()) {
-		return _dirs[n];
-	} else {
-		return _name;
-	}
+	KOB_ASSERT_MSG(n < _dirs.size(), "over flow");
+	return _dirs[n];
 }
 
+std::string path::operator [] (size_t n)
+{
+    KOB_ASSERT_MSG(n <= _dirs.size(), "over flow");
+    return _dirs[n];
+}
+
+void path::replace_dir(size_t index, ksl::string_view seg)
+{
+    KOB_ASSERT_MSG(index <= _dirs.size(), "over flow");
+    _dirs[index].clear();
+    _dirs[index].append(seg.begin(), seg.end());
+}
+
+void path::replace_dir(size_t index, std::string &&seg)
+{
+    KOB_ASSERT_MSG(index <= _dirs.size(), "over flow");
+    _dirs[index] = std::move(seg);
+}
 
 path &path::push_directory(ksl::string_view dir)
 {

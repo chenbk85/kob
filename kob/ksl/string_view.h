@@ -117,6 +117,11 @@ namespace ksl {
 			return _begin[pos];
 		}
 
+        KOB_FUNC_CONSTEXPR void clear()
+        {
+            _begin = nullptr;
+            _count = 0;
+        }
 
 		// 21.4.2.3, capacity
 		KOB_FUNC_CONSTEXPR size_type size() const KOB_NOEXCEPT { return _count; }
@@ -666,9 +671,11 @@ namespace ksl {
 	///    #include <EASTL/hash_set.h>
 	///    hash_set<string_view> stringHashSet;
 	///
-	template <typename T> struct hash;
+	template <typename T>
+	struct hash;
 
-	template<> struct hash<string_view> {
+	template<>
+	struct hash<string_view> {
 		size_t operator()(const string_view& x) const
 		{
 			string_view::const_iterator p = x.cbegin();
@@ -680,7 +687,8 @@ namespace ksl {
 		}
 	};
 
-	template<> struct hash<u16string_view> {
+	template<>
+	struct hash<u16string_view> {
 		size_t operator()(const u16string_view& x) const
 		{
 			u16string_view::const_iterator p = x.cbegin();
@@ -692,7 +700,8 @@ namespace ksl {
 		}
 	};
 
-	template<> struct hash<u32string_view> {
+	template<> struct
+	hash<u32string_view> {
 		size_t operator()(const u32string_view& x) const
 		{
 			u32string_view::const_iterator p = x.cbegin();
